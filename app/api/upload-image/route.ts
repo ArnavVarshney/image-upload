@@ -10,13 +10,9 @@ export async function POST(request: Request) {
         const {url, fields} = await createPresignedPost(client, {
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: uuidv4(),
-            Conditions: [
-                ['content-length-range', 0, 5242880],
-                ['starts-with', '$Content-Type', contentType],
-            ],
+            Conditions: [['content-length-range', 0, 5242880], ['starts-with', '$Content-Type', contentType],],
             Fields: {
-                acl: 'public-read',
-                'Content-Type': contentType,
+                acl: 'public-read', 'Content-Type': contentType,
             },
             Expires: 3600,
         })
