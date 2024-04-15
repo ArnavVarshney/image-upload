@@ -66,3 +66,30 @@ form {
     display: flex;
     flex-direction: column;
 }
+
+.dropzone {
+    border: 2px solid #333;
+    padding: 16px;
+    margin-bottom: 24px;
+    height: 300px;
+    width: 300px;
+    text-align: center;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+    background-color: #f3f3f3;
+}
+
+.dropzone.dragging {
+    background-color: #c3c3c3;
+}
+
+.file-select-button {
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
