@@ -3,6 +3,7 @@
 import React, {useState} from 'react';
 import {Dropzone} from "./components/dropzone";
 import './globals.css'
+import {toast, ToastContainer} from "react-toastify";
 
 export default function Page() {
     const [file, setFile] = useState<File | null>(null);
@@ -16,7 +17,7 @@ export default function Page() {
         e.preventDefault()
 
         if (!file) {
-            alert('Please select a file to upload.')
+            toast.error('Please select a file to upload.')
             return
         }
 
@@ -45,20 +46,20 @@ export default function Page() {
                 // console.log(fields);
                 // const s3Url = `https://${fields.bucket}.s3.ap-east-1.amazonaws.com/${fields.key}`;
                 // console.log('Uploaded file URL:', s3Url);
-                alert('Upload successful!')
+                toast.success('Upload successful!')
             } else {
                 console.error('S3 Upload Error:', uploadResponse)
-                alert('Upload failed.')
+                toast.error('Upload failed.')
             }
         } else {
-            alert('Failed to get pre-signed URL.')
+            toast.error('Failed to get pre-signed URL.')
         }
-
         setUploading(false)
     }
 
     return (
         <main>
+            <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
             <h1>Image Uploader</h1>
             <form onSubmit={handleSubmit}>
                 <Dropzone onFileDrop={handleFileDrop}/>
@@ -66,6 +67,7 @@ export default function Page() {
                     {uploading ? <div className="spinner"></div> : 'Upload'}
                 </button>
             </form>
+            <ToastContainer/>
         </main>
     );
 }

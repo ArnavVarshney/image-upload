@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {toast, ToastContainer} from 'react-toastify';
+import React, {useRef, useState} from 'react';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface DropzoneProps {
@@ -9,6 +9,8 @@ interface DropzoneProps {
 export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop}) => {
     const [dragging, setDragging] = useState(false);
     const [fileName, setFileName] = useState<string>(null);
+    const [filePreviewUrl, setFilePreviewUrl] = useState<string>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -42,41 +44,59 @@ export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop}) => {
             }
 
             setFileName(droppedFile.name); // set the file name
+            setFilePreviewUrl(URL.createObjectURL(droppedFile));
             e.dataTransfer.clearData();
             onFileDrop(droppedFile);
         }
     };
 
+    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files) {
+            const selectedFile = files[0];
+            const maxSize = 5 * 1024 * 1024;
+
+            if (selectedFile.size > maxSize) {
+                toast.error('File size exceeds 5MB. Please select a smaller file.');
+                return;
+            }
+
+            setFileName(selectedFile.name);
+            setFilePreviewUrl(URL.createObjectURL(selectedFile));
+            onFileDrop(selectedFile);
+        }
+    };
+
+    const handleDropzoneClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
     return (
-        <div className={`dropzone ${dragging ? 'dragging' : ''}`} onDragEnter={handleDragEnter}
+        <div className={`dropzone ${dragging ? 'dragging' : ''}`} onClick={handleDropzoneClick}
+             onDragEnter={handleDragEnter}
              onDragLeave={handleDragLeave} onDragOver={handleDragOver} onDrop={handleDrop}>
-            {fileName === null && (
+            {fileName === null ? (
                 <>
                     <p>Drag & drop your image here</p>
                     <p>OR</p>
+                    <p>Click to browse</p>
                     <input
+                        ref={fileInputRef}
                         id="file"
                         type="file"
-                        onChange={(e) => {
-                            const files = e.target.files
-                            if (files) {
-                                const selectedFile = files[0];
-                                const maxSize = 5 * 1024 * 1024;
-
-                                if (selectedFile.size > maxSize) {
-                                    toast.error('File size exceeds 5MB. Please select a smaller file.');
-                                    return;
-                                }
-
-                                setFileName(selectedFile.name);
-                                onFileDrop(selectedFile);
-                            }
-                        }}
+                        onChange={handleFileSelect}
                         accept="image/png"
+                        style={{display: 'none'}}
                     />
                 </>
+            ) : (
+                <>
+                    <p>{fileName}</p>
+                    <img src={filePreviewUrl} alt="preview" style={{width: '100%', height: 'auto'}}/>
+                </>
             )}
-            <ToastContainer/>
         </div>
     );
 };
