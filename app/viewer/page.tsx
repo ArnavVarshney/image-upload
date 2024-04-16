@@ -10,13 +10,6 @@ const DynamicQRCodeScanner = dynamic(
     {ssr: false}
 );
 
-import dynamic from "next/dynamic";
-
-const DynamicQRCodeScanner = dynamic(
-    () => import('../components/qrcode_scanner').then((mod) => mod.QRCodeScanner),
-    {ssr: false}
-);
-
 export default function Viewer() {
     // @ts-ignore
     return (
