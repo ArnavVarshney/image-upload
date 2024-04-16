@@ -17,6 +17,32 @@ export default function Page() {
         setUploadedFileId(null);
     };
 
+    const printQRCode = () => {
+        const iframe = document.createElement('iframe');
+        document.body.appendChild(iframe);
+
+        const qrCodeElement = document.querySelector('.qrCodeBox')?.outerHTML;
+
+        if (qrCodeElement) {
+            iframe.contentDocument?.write(`
+            <html>
+                <head>
+                    <title>Print QR Code</title>
+                </head>
+                <body>
+                    ${qrCodeElement}
+                </body>
+            </html>
+        `);
+            iframe.contentDocument?.close();
+            iframe.contentWindow?.print();
+        } else {
+            console.error('Failed to print QR code.');
+        }
+
+        document.body.removeChild(iframe);
+    };
+
     const handleFileDrop = (droppedFile: File) => {
         setFile(droppedFile);
     };
@@ -77,9 +103,15 @@ export default function Page() {
                     <Dropzone onFileDrop={handleFileDrop} selectedFile={file} setFileName={setFile}/>
                 )}
                 <div className="button-container">
-                    <button type="submit" disabled={uploading}>
-                        {uploading ? <div className="spinner"></div> : 'Upload'}
-                    </button>
+                    {uploadedFileId ? (
+                        <button type="button" onClick={printQRCode}>
+                            Print
+                        </button>
+                    ) : (
+                        <button type="submit" disabled={uploading}>
+                            {uploading ? <div className="spinner"></div> : 'Upload'}
+                        </button>
+                    )}
                     <button type="reset" onClick={resetForm}>
                         Reset
                     </button>
