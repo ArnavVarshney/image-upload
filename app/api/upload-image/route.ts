@@ -14,7 +14,7 @@ export async function POST(request: Request) {
             Fields: {
                 acl: 'public-read', 'Content-Type': contentType,
             },
-            Expires: 3600,
+            Expires: 600,
         })
 
         return Response.json({url, fields})

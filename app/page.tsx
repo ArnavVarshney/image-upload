@@ -1,13 +1,16 @@
 'use client'
 
-import React, {useState} from 'react'
-
+import React, {useState} from 'react';
+import {Dropzone} from "./components/dropzone";
+import './globals.css'
 
 export default function Page() {
-    const [file, setFile] = useState<File | null>(null)
-    const [uploading, setUploading] = useState(false)
-    const [fileName, setFileName] = useState<string>('Drag files here')
-    const [dragging, setDragging] = useState(false);
+    const [file, setFile] = useState<File | null>(null);
+    const [uploading, setUploading] = useState(false);
+
+    const handleFileDrop = (droppedFile: File) => {
+        setFile(droppedFile);
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -54,79 +57,15 @@ export default function Page() {
         setUploading(false)
     }
 
-    const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDragging(true);
-    };
-
-    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDragging(false);
-    };
-
-    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-    };
-
-    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDragging(false);
-
-        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-            const droppedFile = e.dataTransfer.files[0];
-            const maxSize = 5 * 1024 * 1024; // 5MB in bytes
-
-            if (droppedFile.size > maxSize) {
-                alert('File size exceeds 5MB. Please select a smaller file.');
-                return;
-            }
-
-            setFile(droppedFile);
-            setFileName(droppedFile.name); // set the file name
-            e.dataTransfer.clearData();
-        }
-    };
-
     return (
         <main>
             <h1>Image Uploader</h1>
             <form onSubmit={handleSubmit}>
-                <div className={`dropzone ${dragging ? 'dragging' : ''}`} onDragEnter={handleDragEnter}
-                     onDragLeave={handleDragLeave} onDragOver={handleDragOver} onDrop={handleDrop}>
-                    <p>{fileName}</p>
-                    <label htmlFor="file" className="file-select-button">
-                        Select File
-                    </label>
-                    <input
-                        id="file"
-                        type="file"
-                        onChange={(e) => {
-                            const files = e.target.files
-                            if (files) {
-                                const selectedFile = files[0];
-                                const maxSize = 5 * 1024 * 1024; // 5MB in bytes
-
-                                if (selectedFile.size > maxSize) {
-                                    alert('File size exceeds 5MB. Please select a smaller file.');
-                                    return;
-                                }
-
-                                setFile(selectedFile);
-                                setFileName(selectedFile.name);
-                            }
-                        }}
-                        accept="image/png"
-                        style={{display: 'none'}}
-                    />
-                </div>
+                <Dropzone onFileDrop={handleFileDrop}/>
                 <button type="submit" disabled={uploading}>
-                    Upload
+                    {uploading ? <div className="spinner"></div> : 'Upload'}
                 </button>
             </form>
         </main>
-    )
+    );
 }
