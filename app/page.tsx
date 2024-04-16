@@ -13,7 +13,6 @@ export default function Page() {
 
     return (
         <main>
-            <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
             <h1>Image Uploader</h1>
             <form>
                 <div className='button-container' style={{width: 300}}>

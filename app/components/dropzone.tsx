@@ -44,6 +44,11 @@ export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop, setFileName, sele
                 return;
             }
 
+            if (droppedFile.type !== 'image/png') {
+                toast.error('Invalid file type. Please select a .png file.');
+                return;
+            }
+
             setFileName(droppedFile);
             setFilePreviewUrl(URL.createObjectURL(droppedFile));
             e.dataTransfer.clearData();
@@ -59,6 +64,11 @@ export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop, setFileName, sele
 
             if (selectedFile.size > maxSize) {
                 toast.error('File size exceeds 5MB. Please select a smaller file.');
+                return;
+            }
+
+            if (selectedFile.type !== 'image/png') {
+                toast.error('Invalid file type. Please select a .png file.');
                 return;
             }
 

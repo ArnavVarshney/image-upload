@@ -27,3 +27,27 @@ export async function POST(request: Request) {
         return Response.json({error: error.message})
     }
 }
+
+export async function GET(request: Request) {
+    const {searchParams} = new URL(request.url)
+    const imageID = searchParams.get('imageID');
+
+    try {
+        const client = await clientPromise;
+        const db = client.db("image-upload-next");
+        const collection = db.collection("images");
+        const query = {"_id": imageID};
+        // @ts-ignore
+        const image = await collection.findOne(query, {
+            projection: {
+                filename: 0,
+                contentType: 0,
+                uploadDate: 0,
+                Photos: 0
+            }
+        });
+        return Response.json(image);
+    } catch (error) {
+        return Response.json({error: error.message})
+    }
+}
