@@ -12,7 +12,8 @@ button, form, main {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    background-color: #fafafa
+    background-color: #fafafa;
+    color: #000
 }
 
 main {
@@ -138,4 +139,30 @@ input {
     box-sizing: border-box;
     resize: vertical;
     margin-bottom: 16px;
+}
+
+
+.button-style {
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    width: 45%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4rem;
+    background: #000 0 0;
+    color: #fff;
+    padding: 1rem;
+    transition: .1s ease-in-out;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.button-style:hover {
+    background-color: #fff;
+    color: #000;
+    outline: #000000 solid 1px;
 }

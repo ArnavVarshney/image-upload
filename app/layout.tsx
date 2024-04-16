@@ -11,14 +11,12 @@ export const metadata: Metadata = {
     title: "Image Uploader", description: "Upload images to S3",
 };
 
-export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
-    children: React.ReactNode;
-}>) {
-    return (<html lang="en">
-    <Analytics/>
-    <SpeedInsights/>
-    <body className={inter.className}>{children}</body>
-    </html>);
+export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
+    return (
+        <html lang="en">
+        <Analytics/>
+        <SpeedInsights/>
+        <body className={inter.className}>{children}</body>
+        </html>
+    );
 }
