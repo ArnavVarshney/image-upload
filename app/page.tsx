@@ -11,6 +11,11 @@ export default function Page() {
     const [uploading, setUploading] = useState(false);
     const [uploadedFileId, setUploadedFileId] = useState<string | null>(null);
 
+    const resetForm = () => {
+        setFile(null);
+        setUploading(false);
+        setUploadedFileId(null);
+    };
 
     const handleFileDrop = (droppedFile: File) => {
         setFile(droppedFile);
@@ -69,11 +74,16 @@ export default function Page() {
                 {uploadedFileId ? (
                     <QRCodeDisplay fileId={uploadedFileId}/>
                 ) : (
-                    <Dropzone onFileDrop={handleFileDrop}/>
+                    <Dropzone onFileDrop={handleFileDrop} selectedFile={file} setFileName={setFile}/>
                 )}
-                <button type="submit" disabled={uploading}>
-                    {uploading ? <div className="spinner"></div> : 'Upload'}
-                </button>
+                <div className="button-container">
+                    <button type="submit" disabled={uploading}>
+                        {uploading ? <div className="spinner"></div> : 'Upload'}
+                    </button>
+                    <button type="reset" onClick={resetForm}>
+                        Reset
+                    </button>
+                </div>
             </form>
             <ToastContainer/>
         </main>

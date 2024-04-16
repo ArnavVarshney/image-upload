@@ -1,14 +1,15 @@
-import React, {useRef, useState} from 'react';
+import React, {Dispatch, SetStateAction, useRef, useState} from 'react';
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface DropzoneProps {
     onFileDrop: (file: File) => void;
+    selectedFile: File;
+    setFileName: Dispatch<SetStateAction<File>>;
 }
 
-export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop}) => {
+export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop, setFileName, selectedFile}) => {
     const [dragging, setDragging] = useState(false);
-    const [fileName, setFileName] = useState<string>(null);
     const [filePreviewUrl, setFilePreviewUrl] = useState<string>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -43,7 +44,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop}) => {
                 return;
             }
 
-            setFileName(droppedFile.name); // set the file name
+            setFileName(droppedFile);
             setFilePreviewUrl(URL.createObjectURL(droppedFile));
             e.dataTransfer.clearData();
             onFileDrop(droppedFile);
@@ -61,7 +62,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop}) => {
                 return;
             }
 
-            setFileName(selectedFile.name);
+            setFileName(selectedFile);
             setFilePreviewUrl(URL.createObjectURL(selectedFile));
             onFileDrop(selectedFile);
         }
@@ -77,11 +78,12 @@ export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop}) => {
         <div className={`dropzone ${dragging ? 'dragging' : ''}`} onClick={handleDropzoneClick}
              onDragEnter={handleDragEnter}
              onDragLeave={handleDragLeave} onDragOver={handleDragOver} onDrop={handleDrop}>
-            {fileName === null ? (
+            {selectedFile === null ? (
                 <>
                     <p>Drag & drop your image here</p>
                     <p>OR</p>
                     <p>Click to browse</p>
+                    <p>Accepted file types: .png <br/> Max. Size: 5MB</p>
                     <input
                         ref={fileInputRef}
                         id="file"
@@ -93,7 +95,7 @@ export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop}) => {
                 </>
             ) : (
                 <>
-                    <p>{fileName}</p>
+                    <p>{selectedFile.name}</p>
                     <img src={filePreviewUrl} alt="preview" style={{width: '100%', height: 'auto'}}/>
                 </>
             )}
