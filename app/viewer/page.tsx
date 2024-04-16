@@ -4,8 +4,8 @@ import React from 'react';
 import '../globals.css';
 
 import {ToastContainer} from "react-toastify";
-import {Scanner} from '@yudiel/react-qr-scanner';
 import Link from 'next/link';
+import {QRCodeScanner} from "../components/qrcode_scanner";
 
 export default function Viewer() {
     // @ts-ignore
@@ -14,15 +14,7 @@ export default function Viewer() {
             <h1>Image Viewer</h1>
             <p>Scan the QR code to view the image</p>
             <div style={{width: 300}}>
-                <Scanner
-                    onResult={(result, error) => {
-                        console.log(result);
-                        if (result && result.startsWith('https://image-uploader-aws.vercel.app')) {
-                            window.location.href = result;
-                        }
-                    }}
-                    onError={(error) => console.log(error?.message)}
-                />
+                <QRCodeScanner/>
                 <div className="button-container" style={{marginTop: 24, justifyContent: "center"}}>
                     <Link href="/">
                         <label className='button-style'>
