@@ -10,5 +10,8 @@
         </list>
       </option>
     </inspection_tool>
+    <inspection_tool class="RequiredAttributes" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myAdditionalRequiredHtmlAttributes" value="constraints" />
+    </inspection_tool>
   </profile>
 </component>

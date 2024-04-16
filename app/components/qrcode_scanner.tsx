@@ -11,7 +11,6 @@ export const QRCodeScanner: React.FC = () => {
                 if (result && result["text"].startsWith('https://image-uploader-aws.vercel.app')) {
                     window.location.href = result["text"];
                 }
-            }}
-        />
+            }} constraints={undefined}/>
     );
 };
