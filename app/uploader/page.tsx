@@ -79,7 +79,7 @@ export default function Uploader() {
 
             if (uploadResponse.ok) {
                 const s3Url = `https://${fields.bucket}.s3.ap-east-1.amazonaws.com/${fields.key}`;
-                setUploadedFileId(s3Url);
+                setUploadedFileId('https://image-uploader-aws.vercel.app/viewer/' + fields.key);
                 const img = new Image();
                 img.src = URL.createObjectURL(file);
                 img.onload = async function () {
