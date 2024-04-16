@@ -5,6 +5,7 @@ import '../../globals.css';
 
 import {ImageViewer} from "../../components/image_viewer";
 import {notFound} from "next/navigation";
+import Link from "next/link";
 
 export default function Viewer({params}) {
     const decodedURI = decodeURIComponent(params.viewer);
@@ -32,14 +33,21 @@ export default function Viewer({params}) {
     const main = <>
         <main>
             <h1>Image Viewer</h1>
-            <form>
+            <div>
                 <ImageViewer fileURL={imageData.s3Url}/>
                 <textarea
                     className="description"
                     value={imageData.description}
                     disabled={true}
                 />
-            </form>
+                <div className="button-container" style={{marginTop: 24, justifyContent: "center"}}>
+                    <Link href="/">
+                        <label className='button-style'>
+                            Home
+                        </label>
+                    </Link>
+                </div>
+            </div>
         </main>
     </>;
     return main;
