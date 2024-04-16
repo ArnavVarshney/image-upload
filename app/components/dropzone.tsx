@@ -106,7 +106,8 @@ export const Dropzone: React.FC<DropzoneProps> = ({onFileDrop, setFileName, sele
             ) : (
                 <>
                     <p>{selectedFile.name}</p>
-                    <img src={filePreviewUrl} alt="preview" style={{width: '100%', height: 'auto'}}/>
+                    <img src={filePreviewUrl} alt="preview"
+                         style={{width: 'auto', height: 'auto', maxWidth: '90%', maxHeight: '90%'}}/>
                 </>
             )}
         </div>
