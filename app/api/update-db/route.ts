@@ -1,7 +1,7 @@
 import clientPromise from "../../lib/mongo";
 
 export async function POST(request: Request) {
-    const {_id, filename, contentType, s3Url, dimension} = await request.json();
+    const {_id, filename, contentType, s3Url, description, dimension} = await request.json();
 
     try {
         const client = await clientPromise;
@@ -14,6 +14,7 @@ export async function POST(request: Request) {
             contentType: contentType,
             s3Url: s3Url,
             uploadDate: new Date(),
+            description: description,
             Photos: [
                 {
                     Dimension: dimension

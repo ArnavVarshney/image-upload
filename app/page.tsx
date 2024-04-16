@@ -10,11 +10,14 @@ export default function Page() {
     const [file, setFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
     const [uploadedFileId, setUploadedFileId] = useState<string | null>(null);
+    const [description, setDescription] = useState<string>('');
+
 
     const resetForm = () => {
         setFile(null);
         setUploading(false);
         setUploadedFileId(null);
+        setDescription('');
     };
 
     const printQRCode = () => {
@@ -92,6 +95,7 @@ export default function Page() {
                             filename: file.name,
                             contentType: file.type,
                             s3Url: s3Url,
+                            description: description,
                             dimension: {
                                 height: height,
                                 width: width
@@ -126,6 +130,13 @@ export default function Page() {
                 ) : (
                     <Dropzone onFileDrop={handleFileDrop} selectedFile={file} setFileName={setFile}/>
                 )}
+                <textarea
+                    className="description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    disabled={uploading || uploadedFileId !== null}
+                    placeholder="Enter description here..."
+                />
                 <div className="button-container">
                     {uploadedFileId ? (
                         <button type="button" onClick={printQRCode}>
