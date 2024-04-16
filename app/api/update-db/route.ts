@@ -46,6 +46,9 @@ export async function GET(request: Request) {
                 Photos: 0
             }
         });
+        if (image === null) {
+            return Response.json({message: 'NA'})
+        }
         return Response.json(image);
     } catch (error) {
         return Response.json({error: error.message})
