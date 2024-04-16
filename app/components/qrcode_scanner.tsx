@@ -4,7 +4,6 @@ import React from 'react';
 import {QrReader} from "react-qr-reader";
 
 export const QRCodeScanner: React.FC = () => {
-    // @ts-ignore
     return (
         <QrReader
             onResult={(result, error) => {

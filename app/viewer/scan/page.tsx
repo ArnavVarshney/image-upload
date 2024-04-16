@@ -1,24 +1,27 @@
 import React from 'react';
-import '../globals.css';
+import '../../globals.css';
 
 import {ToastContainer} from "react-toastify";
 import Link from 'next/link';
+import dynamic from "next/dynamic";
+
+const DynamicQRCodeScanner = dynamic(
+    () => import('../../components/qrcode_scanner').then((mod) => mod.QRCodeScanner),
+    {ssr: false}
+);
 
 export default function Viewer() {
     // @ts-ignore
     return (
         <main>
             <h1>Image Viewer</h1>
+            <p>Scan the QR code to view the image</p>
             <div style={{width: 300}}>
+                <DynamicQRCodeScanner/>
                 <div className="button-container" style={{marginTop: 24, justifyContent: "center"}}>
-                    <Link href="/viewer/scan">
+                    <Link href="/">
                         <label className='button-style'>
-                            Scan QR Code
-                        </label>
-                    </Link>
-                    <Link href="/viewer/search">
-                        <label className='button-style'>
-                            Search
+                            Home
                         </label>
                     </Link>
                 </div>
