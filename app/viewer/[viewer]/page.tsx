@@ -32,7 +32,9 @@ export default function Viewer({params}) {
 
     const main = <>
         <main>
-            <h1>Image Viewer</h1>
+            <Link href='/'>
+                <h1>Image Viewer</h1>
+            </Link>
             <div>
                 <ImageViewer fileURL={imageData.s3Url}/>
                 <textarea

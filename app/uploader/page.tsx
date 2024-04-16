@@ -6,6 +6,7 @@ import '../globals.css';
 import {toast, ToastContainer} from "react-toastify";
 import {QRCodeDisplay} from "../components/qrcode";
 import {Dropzone} from "../components/dropzone";
+import Link from "next/link";
 
 export default function Uploader() {
     const [file, setFile] = useState<File | null>(null);
@@ -123,7 +124,9 @@ export default function Uploader() {
 
     return (
         <main>
-            <h1>Image Uploader</h1>
+            <Link href='/'>
+                <h1>Image Uploader</h1>
+            </Link>
             <form onSubmit={handleSubmit}>
                 {uploadedFileId ? (
                     <QRCodeDisplay fileId={uploadedFileId}/>

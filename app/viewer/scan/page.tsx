@@ -14,7 +14,9 @@ export default function Viewer() {
     // @ts-ignore
     return (
         <main>
-            <h1>Image Viewer</h1>
+            <Link href='/'>
+                <h1>Image Viewer</h1>
+            </Link>
             <p>Scan the QR code to view the image</p>
             <div style={{width: 300}}>
                 <DynamicQRCodeScanner/>

@@ -8,7 +8,9 @@ export default function Viewer() {
     // @ts-ignore
     return (
         <main>
-            <h1>Image Viewer</h1>
+            <Link href='/'>
+                <h1>Image Viewer</h1>
+            </Link>
             <div style={{width: 300}}>
                 <div className="button-container" style={{marginTop: 24, justifyContent: "center"}}>
                     <Link href="/viewer/scan">
