@@ -8,7 +8,7 @@ export default function SearchImages() {
 
     const handleSearch = async () => {
         const results = await fetch(`/api/search?description=${searchTerm}`, {
-            method: 'POST'
+            method: 'GET'
         });
         const data = await results.json();
         setImages(data);
